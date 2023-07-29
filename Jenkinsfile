@@ -11,7 +11,7 @@ pipeline {
             steps {
                 sh 'docker kill $(docker ps -q)'
                 sh 'docker rm $(docker ps -a -q)'
-                sh 'docker rmi $(docker images -q)'
+                sh 'docker rmi $(docker images -q) -f'
                 sh 'docker build -t task:latest .'
                 sh 'docker tag task:latest tlprdocker/task:latest'
                 sh 'docker push tlprdocker/task:latest'
