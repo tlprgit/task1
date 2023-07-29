@@ -9,9 +9,7 @@ pipeline {
         }
         stage ('Building docker image from dockerfile and run containers using docker-compose') {
             steps {
-                sh 'docker stop $(docker ps -a -q)'
-                sh 'docker rm $(docker ps -a -q)'
-                sh 'docker rmi $(docker images -q) -f'
+                
                 sh 'docker build -t task:latest .'
                 sh 'docker tag task:latest tlprdocker/task:latest'
                 sh 'docker push tlprdocker/task:latest'
