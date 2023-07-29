@@ -1,0 +1,38 @@
+pipeline {
+    agent 'any'
+    stages {
+        stage ('Pull Code') {
+            steps {
+                sh 'echo PULLING CODE FROM GITHUB'
+                git 'https://github.com/tlprgit/task.git'
+            }
+        }
+        stage ('Building docker image from dockerfile and run containers using docker-compose') {
+            steps {
+                sh 'docker build -t task:latest .'
+                sh 'docker tag task:latest tlprdocker/task:latest'
+                sh 'docker push tlprdocker/task:latest'
+                sh 'docker-compose up -d'
+            }
+        }
+        stage('SonarQube analysis') {
+            steps{
+                nodejs(nodeJSInstallationName: 'nodejs') {
+                    sh "npm install"
+                }
+            }
+        }
+        stage('Task:2 Scanning Docker Images using TRIVY') {
+            steps {
+                sh 'trivy image testjob:latest'
+                sh 'trivy image --exit-code 0 --severity HIGH,CRITICAL testjob:latest'
+            }
+        }
+        stage('Docker image and Deploy into k8s') {
+            steps {
+                sh 'kubectl apply -f deployment.yaml'
+                sh 'kubectl apply -f service.yaml'
+            }
+        }
+    }
+}
