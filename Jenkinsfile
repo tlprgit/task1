@@ -15,26 +15,6 @@ pipeline {
                 sh 'docker-compose up -d'
             }
         }
-            stage('SonarQube Analysis') {
-                steps{
-                    script {
-                def scannerHome = tool 'sonar'
-                withSonarQubeEnv('sonarqube') {
-                    sh """/test/sonar-scanner-4.7.0.2747-linux/bin/sonar-scanner \
-                    -D sonar.projectVersion=1.0-SNAPSHOT \
-                    -D sonar.login=admin \
-                    -D sonar.password=tlpr \
-                    -D sonar.projectBaseDir=/var/lib/jenkins/workspace/test1_master \
-                    -D sonar.projectKey=sonar \
-                    -D sonar.sourceEncoding=UTF-8 \
-                    -D sonar.language=js \
-                    -D sonar.sources=config,controllers,models,test,views \
-                    -D sonar.tests=test1/test \
-                    -D sonar.host.url=http://3.84.141.102:9000/"""
-                }
-                    }
-                }
-            }
         stage('Task:2 Scanning Docker Images using TRIVY') {
             steps {
                 sh 'trivy image testjob:latest'
