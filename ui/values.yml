@@ -1,0 +1,31 @@
+app:
+  replicas: 1 # Assign here howmany replicas you want
+  env: dev # dev (or) qa (or) prod
+  container:
+    image: tlprdocker/task:latest
+  computerc:
+    limits:
+      cpu: 0.2
+      memory: 500Mi
+    requests:
+      cpu: 0.2
+      memory: 500Mi
+
+hpa:
+  enabled: false 
+  #maxreplicas: 2         # for dev env, we dont need hpa
+  #minrplicas: 1          # so, we assign false value for this
+  #cuputi: 80             # change it true based on your need and enable the 3 keys by removing "#"
+
+config:
+  name: config.yaml
+  data: 
+    timeout: 10s
+    logfile: /app/var/log.txt
+    database:
+      ip: 10.20.30.40     # For each env, change these ip addresses to access the env
+      name: ui-prod 
+
+
+configxml:
+  name: app.xml
