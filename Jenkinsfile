@@ -19,7 +19,7 @@ pipeline {
                 steps{
                     script {
                 def scannerHome = tool 'sonar'
-                withSonarQubeEnv('SonarQube') {
+                withSonarQubeEnv('sonarqube') {
                     sh """/test/sonar-scanner-4.7.0.2747-linux/bin/sonar-scanner \
                     -D sonar.projectVersion=1.0-SNAPSHOT \
                     -D sonar.login=admin \
