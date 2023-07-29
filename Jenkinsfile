@@ -15,10 +15,11 @@ pipeline {
                 sh 'docker-compose up -d'
             }
         }
-        stage('SonarQube analysis') {
-            steps{
-                nodejs(nodeJSInstallationName: 'nodejs') {
-                    sh "npm install"
+        stage('SonarQube Analysis') {
+            steps {
+                def scannerHome = tool 'SonarScanner';
+                withSonarQubeEnv() {
+                    sh "${scannerHome}/bin/sonar-scanner"
                 }
             }
         }
