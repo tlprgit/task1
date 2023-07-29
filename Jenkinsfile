@@ -20,7 +20,7 @@ pipeline {
                     script {
                 def scannerHome = tool 'sonar'
                 withSonarQubeEnv('SonarQube') {
-                    sh """/var/lib/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/SonarQube/bin/sonar-scanner \
+                    sh """/test/sonar-scanner-4.7.0.2747-linux/bin/sonar-scanner \
                     -D sonar.projectVersion=1.0-SNAPSHOT \
                     -D sonar.login=admin \
                     -D sonar.password=tlpr \
