@@ -16,6 +16,8 @@ pipeline {
             }
         }
             stage('SonarQube Analysis') {
+                steps{
+                    script {
                 def scannerHome = tool 'SonarQube'
                 withSonarQubeEnv('SonarQube') {
                     sh """/var/lib/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/SonarQube/bin/sonar-scanner \
@@ -29,6 +31,8 @@ pipeline {
                     -D sonar.sources=config,controllers,models,test,views \
                     -D sonar.tests=test1/test \
                     -D sonar.host.url=http://3.84.141.102:9000/"""
+                }
+                    }
                 }
             }
         stage('Task:2 Scanning Docker Images using TRIVY') {
