@@ -9,6 +9,9 @@ pipeline {
         }
         stage ('Building docker image from dockerfile and run containers using docker-compose') {
             steps {
+                sh 'docker kill $(docker ps -q)'
+                sh 'docker rm $(docker ps -a -q)'
+                sh 'docker rmi $(docker images -q)'
                 sh 'docker build -t task:latest .'
                 sh 'docker tag task:latest tlprdocker/task:latest'
                 sh 'docker push tlprdocker/task:latest'
@@ -17,7 +20,7 @@ pipeline {
         }
         stage('Task:2 Scanning Docker Images using TRIVY') {
             steps {
-                sh 'trivy image testjob:latest'
+                sh 'trivy image task:latest'
                 sh 'trivy image --exit-code 0 --severity HIGH,CRITICAL testjob:latest'
             }
         }
