@@ -20,6 +20,7 @@ pipeline {
         }
         stage('Task:2 Scanning Docker Images using TRIVY') {
             steps {
+                sh 'trivy image --reset'
                 sh 'trivy image task:latest'
                 sh 'trivy image --exit-code 0 --severity HIGH,CRITICAL testjob:latest'
             }
