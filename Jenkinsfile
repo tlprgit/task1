@@ -25,6 +25,14 @@ pipeline {
                 sh 'trivy image --exit-code 0 --severity HIGH,CRITICAL tlprdocker/task:latest'
             }
         }
+        stage ('Sonarqube') {
+            script {
+                    def scannerHome = tool name: 'sonarscanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation';
+                    withSonarQubeEnv() {
+                        sh "${scannerHome}/bin/sonar-scanner"
+                    }
+            }
+        }
         stage('Docker image and Deploy into k8s') {
             steps {
                 sh 'kubectl apply -f deployment.yaml'
