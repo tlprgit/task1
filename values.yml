@@ -1,5 +1,5 @@
 app:
-  replicas: 1 # Assign here howmany replicas you want
+  replicas: 3 # Assign here howmany replicas you want
   env: dev # dev (or) qa (or) prod
   container:
     image: tlprdocker/task:latest
