@@ -35,5 +35,10 @@ pipeline {
             }
             }
         }
+        stage ('starting app') { 
+        steps {
+            sh 'node app.js'
+        }
+        }
     }
 }
