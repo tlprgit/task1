@@ -4,7 +4,7 @@ pipeline {
         stage ('Pull Code') {
             steps {
                 sh 'echo PULLING CODE FROM GITHUB'
-                git 'https://github.com/tlprgit/task.git'
+                git 'https://github.com/tlprgit/task1.git'
             }
         }
         stage ('Building docker image from dockerfile and run containers using docker-compose') {
@@ -25,7 +25,7 @@ pipeline {
                 sh 'trivy image --exit-code 0 --severity HIGH,CRITICAL tlprdocker/task:latest'
             }
         }
-        stage ('Sonarqube') {
+        stage ('Task:3 Sonarqube') {
             steps {
             script {
                     def scannerHome = tool name: 'sonarscanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation';
@@ -35,6 +35,5 @@ pipeline {
             }
             }
         }
-        
     }
 }
