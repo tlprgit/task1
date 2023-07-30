@@ -33,11 +33,6 @@ pipeline {
                     }
             }
         }
-        stage('Docker image and Deploy into k8s') {
-            steps {
-                sh 'kubectl apply -f deployment.yaml'
-                sh 'kubectl apply -f service.yaml'
-            }
-        }
+        
     }
 }
