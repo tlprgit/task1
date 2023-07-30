@@ -22,7 +22,7 @@ pipeline {
             steps {
                 sh 'trivy image --reset'
                 sh 'trivy image tlprdocker/task:latest'
-                sh 'trivy image --exit-code 0 --severity HIGH,CRITICAL testjob:latest'
+                sh 'trivy image --exit-code 0 --severity HIGH,CRITICAL tlprdocker/task:latest'
             }
         }
         stage('Docker image and Deploy into k8s') {
